@@ -14,8 +14,7 @@ jobs:
 
       - name: Generate images.json
         run: |
-          cd wallpaper/Tira-27-1080-1920
-          ls -1 | jq -R . | jq -s . > ../../images.json
+          find wallpaper -type f | sed 's|^wallpaper/||' | jq -R . | jq -s . > images.json
 
       - name: Commit
         run: |

@@ -1,0 +1,26 @@
+name: Generate image list
+
+on:
+  push:
+    paths:
+      - "wallpaper/**"
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Generate images.json
+        run: |
+          cd wallpaper/Tira-27-1080-1920
+          ls -1 | jq -R . | jq -s . > ../../images.json
+
+      - name: Commit
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add images.json
+          git commit -m "update images" || echo "no change"
+          git push

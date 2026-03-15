@@ -1,28 +1,20 @@
-const folder = "wallpaper/Tira-27-1080-1920/";
-
 const gallery = document.getElementById("gallery");
 let images = [];
 
 /* โหลดรายชื่อรูป */
-
 fetch("images.json")
 .then(res => res.json())
 .then(files => {
+  files.forEach((file,i)=>{
+    let img = document.createElement("img");
+    img.loading = "lazy";
+    img.src = "wallpaper/" + file;
 
-files.forEach((file,i)=>{
+    gallery.appendChild(img);
+    images.push(img);
 
-let img = document.createElement("img");
-
-img.loading="lazy";
-img.src = folder + file;
-
-gallery.appendChild(img);
-images.push(img);
-
-img.onclick=()=>showImage(i);
-
-});
-
+    img.onclick = () => showImage(i);
+  });
 });
 
 const lightbox = document.getElementById("lightbox");
